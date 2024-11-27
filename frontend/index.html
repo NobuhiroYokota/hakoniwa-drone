@@ -4,21 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>バッチファイル実行</title>
+  <title>ドローン旅行体験</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <h1>バッチファイル実行</h1>
-  <button id="runBatchButton">バッチファイルを実行</button>
-  <p id="statusMessage"></p>
+  <div class="container">
+    <h1>ドローン旅行体験</h1>
+    <p class="description">ドローンでの旅行を疑似体験しよう！美しい景色と冒険があなたを待っています。</p>
+
+    <div class="buttons">
+      <button id="course1Button" class="button">コース1</button>
+      <button id="course2Button" class="button">コース2</button>
+    </div>
+
+    <!-- ステータスメッセージを表示するための要素 -->
+    <p id="statusMessage"></p>
+  </div>
 
   <script>
-    document.getElementById('runBatchButton').addEventListener('click', () => {
+    document.getElementById('course1Button').addEventListener('click', () => {
       const statusMessage = document.getElementById('statusMessage');
       statusMessage.textContent = "バッチファイルを実行中...";
 
       // サーバーにリクエストを送信
-      fetch('http://localhost:5000/run-batch', {
+      fetch('http://localhost:5000/run-course1', {
         method: 'POST',
       })
         .then((response) => {
@@ -31,10 +41,35 @@
           statusMessage.textContent = data; // サーバーからのレスポンスメッセージを表示
         })
         .catch((error) => {
-          statusMessage.textContent = `エラー: ${error.message}`;
+          statusMessage.textContent = `エラー: ${error.message}`; // エラーメッセージを表示
         });
     });
   </script>
+
+  <script>
+    document.getElementById('course2Button').addEventListener('click', () => {
+      const statusMessage = document.getElementById('statusMessage');
+      statusMessage.textContent = "バッチファイルを実行中...";
+
+      // サーバーにリクエストを送信
+      fetch('http://localhost:5000/run-course2', {
+        method: 'POST',
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('バッチファイルの実行に失敗しました');
+          }
+          return response.text();
+        })
+        .then((data) => {
+          statusMessage.textContent = data; // サーバーからのレスポンスメッセージを表示
+        })
+        .catch((error) => {
+          statusMessage.textContent = `エラー: ${error.message}`; // エラーメッセージを表示
+        });
+    });
+  </script>
+
 </body>
 
 </html>
