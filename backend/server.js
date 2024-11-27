@@ -9,7 +9,7 @@ const PORT = 5000;
 
 app.use(cors());
 
-app.post('/run-batch', (req, res) => {
+app.post('/run-course1', (req, res) => {
   const batchFilePath = path.join(__dirname, 'run-test.bat'); // 絶対パスを使用
   let command;
 
