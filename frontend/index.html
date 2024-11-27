@@ -1,13 +1,40 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バッチファイル実行</title>
+</head>
+
+<body>
+  <h1>バッチファイル実行</h1>
+  <button id="runBatchButton">バッチファイルを実行</button>
+  <p id="statusMessage"></p>
+
+  <script>
+    document.getElementById('runBatchButton').addEventListener('click', () => {
+      const statusMessage = document.getElementById('statusMessage');
+      statusMessage.textContent = "バッチファイルを実行中...";
+
+      // サーバーにリクエストを送信
+      fetch('http://localhost:5000/run-batch', {
+        method: 'POST',
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('バッチファイルの実行に失敗しました');
+          }
+          return response.text();
+        })
+        .then((data) => {
+          statusMessage.textContent = data; // サーバーからのレスポンスメッセージを表示
+        })
+        .catch((error) => {
+          statusMessage.textContent = `エラー: ${error.message}`;
+        });
+    });
+  </script>
+</body>
+
 </html>
